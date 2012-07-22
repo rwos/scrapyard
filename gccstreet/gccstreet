@@ -1,0 +1,82 @@
+#!/usr/bin/python
+import pygame, sys, pygame.font, random
+from pygame.locals import *
+
+class GameObject:
+    def __init__(self, image, txt, x, y, speed):
+        self.speed = speed
+        self.image = image
+        self.x, self.y = x, y
+        self.pos = image.get_rect().move(x, y)
+        self.txt = txt
+        if "error" in self.txt:
+            self.error = True
+        else:
+            self.error = False
+    def move(self):
+        if self.error and self.pos.top <= 100:
+            explosion = pygame.image.load('explosion.gif').convert()
+            # explode
+            for i in xrange(50):
+                screen.blit(self.image, self.pos)
+                xmv = random.choice(range(5))
+                ymv = random.choice(range(5))
+                screen.blit(explosion, self.pos.move(xmv, ymv), explosion.get_rect())
+                # txt
+                font = pygame.font.Font(None, 36)
+                text = font.render(self.txt, 1, (10, 10, 10))
+                textpos = text.get_rect(centerx=background.get_width()/2)
+                oldtxtpos = textpos
+                screen.blit(text, textpos)
+
+                pygame.display.update()
+                pygame.time.delay(10)
+            screen.blit(background, (0, 0))
+            self.error = False
+            self.pos.move(0, -200)
+        else:
+            self.pos = self.pos.move(0, self.speed)
+
+
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+car = pygame.image.load('car.gif').convert()
+background = pygame.image.load('background.bmp').convert()
+screen.blit(background, (0, 0))
+objects = []
+
+src = sys.stdin.read().split("\n")
+src.append("DONE!")
+for line in src:
+    o = GameObject(car, line.strip(), 450, 600, -10)
+    objects.append(o)
+
+for o in objects:
+    oldtxtpos = None
+    while 1:
+        for event in pygame.event.get():
+            if event.type in (QUIT, KEYDOWN):
+                sys.exit()
+        screen.blit(background, o.pos, o.pos)
+        if oldtxtpos is not None:
+            screen.blit(background, oldtxtpos, oldtxtpos)
+        o.move()
+        if o.pos.top == -200:
+            break
+        screen.blit(o.image, o.pos)
+        # txt
+        font = pygame.font.Font(None, 36)
+        text = font.render(o.txt, 1, (10, 10, 10))
+        textpos = text.get_rect(centerx=background.get_width()/2)
+        oldtxtpos = textpos
+        screen.blit(text, textpos)
+
+        pygame.display.update()
+        pygame.time.delay(10)
+
+while 1:
+    for event in pygame.event.get():
+        if event.type in (QUIT, KEYDOWN):
+            sys.exit()
+    pygame.time.delay(200)
+
