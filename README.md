@@ -9,9 +9,6 @@ or just really really bad ideas.
 I don't want to work on those programs anymore, but I also don't want
 to just go and delete them. So here they are, may they rest in piece.
 
-You may do anything you want with any files in this repository, including
-but not limited to re-distributing or selling them (ha, good luck!).
-
 You'll find a README in each sub-directory, telling you some things about
 the hack in question.
 
@@ -24,4 +21,13 @@ Author
 ======
 
 Richard Wossal <richard@r-wos.org>
+
+License
+=======
+
+To the extent possible under law, the author has dedicated all copyright
+and related and neighboring rights to this software to the public domain
+worldwide. This software is distributed without any warranty.
+
+See the file called COPYING for details.
 
