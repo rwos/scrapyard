@@ -4,6 +4,8 @@ gcc-street
 It's basically a graphical compiler-error-message viewer.
 A very quick hack.
 
+![Screenshot](http://r-wos.org/media/gccstreet.png)
+
 Preparation
 ===========
 
